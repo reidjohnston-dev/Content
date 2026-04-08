@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teach AI Your Voice — Teal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #f8f9fa;
+    color: #003C71;
+    line-height: 1.6;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: #003C71;
+    position: relative;
+    overflow: hidden;
+    padding: 64px 48px 56px;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 280px; height: 280px;
+    background: #00B2A9;
+    opacity: 0.12;
+    transform: rotate(45deg);
+    top: -80px; right: -40px;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 180px; height: 180px;
+    background: #00B2A9;
+    opacity: 0.08;
+    transform: rotate(45deg);
+    top: 40px; right: 60px;
+  }
+  .hero-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #00B2A9;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: 42px;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1.2;
+    max-width: 700px;
+    margin-bottom: 16px;
+  }
+  .hero p {
+    font-size: 18px;
+    font-weight: 400;
+    color: #B9D9EB;
+    max-width: 640px;
+    line-height: 1.6;
+  }
+  .hero-byline {
+    margin-top: 32px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(185, 217, 235, 0.7);
+  }
+  .hero-byline a {
+    color: #00B2A9;
+    text-decoration: none;
+  }
+
+  /* ── CONTENT AREA ── */
+  .content {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+
+  /* ── SETUP SECTION ── */
+  .setup-section {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 36px 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .setup-section h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #003C71;
+    margin-bottom: 20px;
+  }
+  .step {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+  }
+  .step:last-child { margin-bottom: 0; }
+  .step-num {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    background: #003C71;
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+  .step-text {
+    font-size: 16px;
+    color: #003C71;
+    line-height: 1.6;
+  }
+  .step-text strong {
+    font-weight: 600;
+  }
+  .step-text .subtle {
+    color: #6b7a8d;
+    font-size: 14px;
+  }
+
+  /* ── PROMPT SECTION ── */
+  .prompt-section {
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    overflow: hidden;
+  }
+  .prompt-header {
+    background: #003C71;
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .prompt-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #FFFFFF;
+  }
+  .copy-btn {
+    background: #00B2A9;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .copy-btn:hover {
+    background: #009e96;
+  }
+  .copy-btn.copied {
+    background: #064e3b;
+  }
+
+  .prompt-body {
+    padding: 36px 40px;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: #1a2a3a;
+    white-space: pre-wrap;
+    font-family: 'Poppins', sans-serif;
+  }
+  .prompt-body h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #003C71;
+    margin-top: 28px;
+    margin-bottom: 8px;
+  }
+  .prompt-body h3:first-child {
+    margin-top: 0;
+  }
+  .prompt-body h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #003C71;
+    margin-top: 20px;
+    margin-bottom: 6px;
+  }
+  .prompt-body .phase-label {
+    display: inline-block;
+    background: #003C71;
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-top: 32px;
+    margin-bottom: 12px;
+  }
+  .prompt-body .divider {
+    border: none;
+    border-top: 2px solid #e8ecf0;
+    margin: 28px 0;
+  }
+  .prompt-body ul {
+    margin: 8px 0 8px 8px;
+    list-style: none;
+  }
+  .prompt-body ul li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 6px;
+  }
+  .prompt-body ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 10px;
+    height: 10px;
+    border-top: 2.5px solid #00B2A9;
+    border-right: 2.5px solid #00B2A9;
+  }
+  .prompt-body .highlight-box {
+    background: rgba(0, 178, 169, 0.06);
+    border-left: 4px solid #00B2A9;
+    padding: 16px 20px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .prompt-body code {
+    background: #eef2f7;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #4C4084;
+  }
+  .prompt-body .yaml-block {
+    background: #1a2a3a;
+    color: #B9D9EB;
+    padding: 20px 24px;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 12px 0;
+    overflow-x: auto;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 32px;
+    font-size: 13px;
+    color: #8896a6;
+  }
+  .footer a {
+    color: #00B2A9;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  @media print {
+    .copy-btn { display: none; }
+    .hero { padding: 40px 32px; }
+    .content { padding: 32px 16px; }
+    body { background: #fff; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-label">AI + Productivity</div>
+  <h1>Teach AI how you actually write</h1>
+  <p>A prompt that reads your sent emails and builds a reusable voice profile, so AI drafts sound like you — not like a robot.</p>
+  <div class="hero-byline">Reid Johnston / Cofounder & CITO @ Teal / <a href="https://linkedin.com/in/reidjohnston">linkedin.com/in/reidjohnston</a></div>
+</div>
+
+<!-- ══ CONTENT ══ -->
+<div class="content">
+
+  <!-- SETUP -->
+  <div class="setup-section">
+    <h2>Before you start</h2>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text"><strong>Connect your email to Claude.</strong><br><span class="subtle">Go to Settings in Claude, enable the Microsoft 365 or Google connector. The prompt needs access to your Sent folder.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text"><strong>Start a new conversation.</strong><br><span class="subtle">Copy the full prompt below and paste it as your first message.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text"><strong>Let it run, then review.</strong><br><span class="subtle">Claude will analyze 40-50 of your sent emails and build a voice profile. Review it, tell it what it got wrong, and iterate.</span></div>
+    </div>
+  </div>
+
+  <!-- PROMPT -->
+  <div class="prompt-section">
+    <div class="prompt-header">
+      <h2>The prompt</h2>
+      <button class="copy-btn" onclick="copyPrompt()">Copy to clipboard</button>
+    </div>
+    <div class="prompt-body" id="prompt-content">
+<h3>Task</h3>
+Build a comprehensive writing voice profile for me by analyzing my sent emails from the last 90 days. The output will be a Claude skill (SKILL.md) that lets Claude write content in my voice.
+
+<h3>Prerequisites</h3>
+Before starting, confirm which email connector is available. You need one of:
+<ul>
+<li><strong>Microsoft 365</strong> (uses <code>outlook_email_search</code> and <code>read_resource</code> tools)</li>
+<li><strong>Google Workspace</strong> (uses Gmail search and read tools)</li>
+</ul>
+If neither connector is available, stop and tell me how to enable one. Do not proceed without email access.
+
+<hr class="divider">
+<div class="phase-label">Phase 1</div>
+<h3>Collect raw material</h3>
+Search my Sent Items / Sent Mail folder for emails from the last 90 days. Pull at least 75-100 emails across that window. Work in batches of ~25, paginating by date range from newest to oldest.
+
+For each batch, capture the subject, recipients, date, and preview/summary.
+
+From those results, select 40-50 emails that represent a diverse cross-section of my communication. Prioritize variety across these dimensions:
+<ul>
+<li>Audience type (clients, internal team, vendors, advisors, partners, cold contacts)</li>
+<li>Email purpose (outreach, reply, delegation, advisory, follow-up, FYI forward, quick acknowledgment, multi-question, bad news, good news)</li>
+<li>Length (one-liners through multi-paragraph)</li>
+<li>Formality level (casual internal to formal external)</li>
+</ul>
+For each selected email, read the full message body. Do not analyze summaries or previews alone — you need the complete text.
+
+<div class="highlight-box"><strong>Critical: isolate only my writing.</strong> Sent emails often contain quoted reply chains, forwarded messages, and original content from other people. You must strip all of that out before analysis. Only my original words count. Look for common quote markers to identify where my writing ends and someone else's begins:
+<ul>
+<li>Lines starting with <code>&gt;</code> (standard quote prefix)</li>
+<li>"On [date], [person] wrote:" followed by indented or quoted text</li>
+<li>"From:" / "Sent:" / "To:" / "Subject:" headers embedded in the body (forwarded content)</li>
+<li><code>-----Original Message-----</code> or similar separator lines</li>
+<li>HTML-rendered quote blocks (bordered/indented sections in rich-text emails)</li>
+<li>Outlook-style "________________________________" divider lines</li>
+</ul>
+Everything below those markers is someone else's content. Ignore it entirely. If an email is nothing but a forwarded message with no original text from me, skip it and pick another one.
+
+You can read the quoted thread to understand the context of my reply (what I was responding to, what the conversation was about). But do not use any language from those quoted sections as evidence of my voice patterns. Only the text I wrote above the quote line goes into the analysis.</div>
+
+If you hit rate limits or pagination walls, tell me how many emails you've collected so far and keep going until you have at least 40 full-body emails. Do not stop at 25 and call it done.
+
+<hr class="divider">
+<div class="phase-label">Phase 2</div>
+<h3>Analyze patterns</h3>
+Work through the full email set and extract patterns across these categories. Use direct quotes from the emails as evidence for every pattern you identify. Do not generalize without examples.
+
+<h4>Greetings and sign-offs</h4>
+<ul>
+<li>Every distinct greeting format I use (e.g., "Hey [Name],", "[Name]-", "Team", no greeting)</li>
+<li>Every distinct sign-off format (e.g., "-[Name]", "Thanks, [Name]", no sign-off)</li>
+<li>Which greetings pair with which audiences</li>
+<li>What I never do (common professional greetings/sign-offs absent from the entire sample)</li>
+</ul>
+<h4>Sentence structure and rhythm</h4>
+<ul>
+<li>Average sentence length and how I mix short and long</li>
+<li>How I open emails — what's the first sentence pattern?</li>
+<li>How I transition between topics within an email</li>
+<li>Whether I use paragraphs, line breaks, or both to separate ideas</li>
+<li>Punctuation habits: ellipsis, exclamation marks, dashes, parenthetical asides</li>
+<li>Do I use questions? How? Rhetorical or direct?</li>
+</ul>
+<h4>Vocabulary and phrases</h4>
+<ul>
+<li>Recurring phrases, idioms, or verbal tics (minimum 15 distinct examples with the email context where each appeared)</li>
+<li>Technical jargon and abbreviations I use without explanation</li>
+<li>Words or phrases I clearly avoid</li>
+<li>How I soften or sharpen a message (hedging language vs. direct statements)</li>
+</ul>
+<h4>Tone calibration by audience</h4>
+<ul>
+<li>How does my tone shift between different audiences (clients, internal team, vendors, advisors)?</li>
+<li>Where am I warm vs. blunt?</li>
+<li>Where am I formal vs. casual?</li>
+<li>Do I show vulnerability, frustration, humor, or self-deprecation? With whom?</li>
+</ul>
+<h4>Structural patterns by email type</h4>
+<ul>
+<li>What does a check-in email look like? (opening, body, close)</li>
+<li>What does an internal FYI forward look like?</li>
+<li>What does a delegation/action request look like?</li>
+<li>What does an advisory email look like?</li>
+<li>What does a quick reply look like?</li>
+<li>What does a multi-question email look like?</li>
+<li>What does a relationship management recap look like?</li>
+<li>Any other recurring structural templates you find</li>
+</ul>
+<h4>What I don't do</h4>
+<ul>
+<li>Formatting I avoid (bold, italic, bullet points, numbered lists, emojis)</li>
+<li>Phrases or patterns I never use despite them being common in professional email</li>
+<li>Sign-offs, openings, or hedges that are absent from the entire sample</li>
+</ul>
+
+<hr class="divider">
+<div class="phase-label">Phase 3</div>
+<h3>Write the voice profile</h3>
+Using the analysis from Phase 2, produce a complete SKILL.md file with this frontmatter:
+<div class="yaml-block">---
+name: my-voice
+description: "Write content in [YOUR NAME]'s authentic voice
+  and communication style. Use this skill whenever drafting
+  emails, messages, Slack posts, client communications,
+  internal notes, or any written content on [YOUR NAME]'s
+  behalf. Also use when the user says 'write like me',
+  'draft in my voice', 'sound like me', 'write this for me',
+  or asks to compose any professional communication."
+---</div>
+Replace <code>[YOUR NAME]</code> with my actual name (you'll know it from the emails). Replace <code>my-voice</code> with <code>[firstname]-voice</code> in lowercase.
+
+The body of the skill should contain these sections:
+
+<strong>1. Core voice identity</strong> — 2-3 paragraphs describing the overall feel of my writing. Not abstract — grounded in what the emails actually show.
+
+<strong>2. Greetings and sign-offs</strong> — Every pattern, with notes on when each is used. Include a "never use" list.
+
+<strong>3. Sentence structure and rhythm</strong> — Concrete patterns with real examples quoted from the emails. Show the rhythm, don't just describe it.
+
+<strong>4. Vocabulary and phrases</strong> — Two subsections: Signature expressions (15+ entries, each with a brief definition and example context) and abbreviations/shorthand I use.
+
+<strong>5. Tone calibration by audience</strong> — Separate sections for each audience type I communicate with. Each section should include an example email excerpt that captures the tone.
+
+<strong>6. Structural patterns by email type</strong> — Numbered step templates for each recurring email format. Specific enough that Claude can follow them to produce a structurally accurate email.
+
+<strong>7. Things I don't do</strong> — A concrete list of anti-patterns.
+
+<strong>8. Applying this skill</strong> — A short checklist for Claude to follow when using this profile.
+
+<hr class="divider">
+<div class="phase-label">Phase 4</div>
+<h3>Present and review</h3>
+Save the SKILL.md file and present it. Then ask me to review each section and tell you what's wrong, missing, or over-fitted to a single email rather than a real pattern.
+
+<hr class="divider">
+<h3>Rules for this task</h3>
+<ul>
+<li>Do not invent patterns. Every claim in the profile must be supported by at least 2-3 emails showing the same behavior. If something appears in only one email, flag it as a one-off, not a pattern.</li>
+<li>Quote my actual words as evidence. The profile should contain real excerpts, not paraphrased summaries of what I "tend to" do.</li>
+<li>Do not describe my voice in vague terms like "professional yet approachable." Be specific. What words do I actually use? What structures do I actually follow?</li>
+<li>If two patterns contradict each other (e.g., I'm formal with one client and casual with another), capture both and explain the conditions.</li>
+<li>Do not pad the profile. If a section has only 3 real patterns, list 3. Do not inflate to 10 with invented ones.</li>
+<li>Treat this like forensic linguistics, not a personality quiz.</li>
+<li>Never attribute someone else's words to me. If a phrase appears only in a quoted reply chain or forwarded message — not in my original text above the quote — it is not my writing. Double-check every quote you pull by confirming it sits above the reply separator, not below it.</li>
+</ul>
+    </div>
+  </div>
+
+  <div class="footer"></div>
+</div>
+
+<script>
+// ── Raw prompt text for clipboard (plain text, no HTML) ──
+const rawPrompt = `## Task
+
+Build a comprehensive writing voice profile for me by analyzing my sent emails from the last 90 days. The output will be a Claude skill (SKILL.md) that lets Claude write content in my voice.
+
+## Prerequisites
+
+Before starting, confirm which email connector is available. You need one of:
+- **Microsoft 365** (uses \`outlook_email_search\` and \`read_resource\` tools)
+- **Google Workspace** (uses Gmail search and read tools)
+
+If neither connector is available, stop and tell me how to enable one. Do not proceed without email access.
+
+## Process
+
+### Phase 1: Collect raw material
+
+Search my Sent Items / Sent Mail folder for emails from the last 90 days. Pull at least 75-100 emails across that window. Work in batches of ~25, paginating by date range from newest to oldest.
+
+For each batch, capture the subject, recipients, date, and preview/summary.
+
+From those results, select 40-50 emails that represent a diverse cross-section of my communication. Prioritize variety across these dimensions:
+- Audience type (clients, internal team, vendors, advisors, partners, cold contacts)
+- Email purpose (outreach, reply, delegation, advisory, follow-up, FYI forward, quick acknowledgment, multi-question, bad news, good news)
+- Length (one-liners through multi-paragraph)
+- Formality level (casual internal to formal external)
+
+For each selected email, read the full message body. Do not analyze summaries or previews alone — you need the complete text.
+
+**Critical: isolate only my writing.** Sent emails often contain quoted reply chains, forwarded messages, and original content from other people. You must strip all of that out before analysis. Only my original words count. Look for common quote markers to identify where my writing ends and someone else's begins:
+- Lines starting with \`>\` (standard quote prefix)
+- "On [date], [person] wrote:" followed by indented or quoted text
+- "From:" / "Sent:" / "To:" / "Subject:" headers embedded in the body (forwarded content)
+- \`-----Original Message-----\` or similar separator lines
+- HTML-rendered quote blocks (bordered/indented sections in rich-text emails)
+- Outlook-style "________________________________" divider lines
+
+Everything below those markers is someone else's content. Ignore it entirely. If an email is nothing but a forwarded message with no original text from me, skip it and pick another one.
+
+You can read the quoted thread to understand the context of my reply (what I was responding to, what the conversation was about). But do not use any language from those quoted sections as evidence of my voice patterns. Only the text I wrote above the quote line goes into the analysis.
+
+**If you hit rate limits or pagination walls, tell me how many emails you've collected so far and keep going until you have at least 40 full-body emails. Do not stop at 25 and call it done.**
+
+### Phase 2: Analyze patterns
+
+Work through the full email set and extract patterns across these categories. Use direct quotes from the emails as evidence for every pattern you identify. Do not generalize without examples.
+
+**Greetings and sign-offs**
+- Every distinct greeting format I use (e.g., "Hey [Name],", "[Name]-", "Team", no greeting)
+- Every distinct sign-off format (e.g., "-[Name]", "Thanks, [Name]", no sign-off)
+- Which greetings pair with which audiences
+- What I never do (common professional greetings/sign-offs absent from the entire sample)
+
+**Sentence structure and rhythm**
+- Average sentence length and how I mix short and long
+- How I open emails — what's the first sentence pattern?
+- How I transition between topics within an email
+- Whether I use paragraphs, line breaks, or both to separate ideas
+- Punctuation habits: ellipsis, exclamation marks, dashes, parenthetical asides
+- Do I use questions? How? Rhetorical or direct?
+
+**Vocabulary and phrases**
+- Recurring phrases, idioms, or verbal tics (minimum 15 distinct examples with the email context where each appeared)
+- Technical jargon and abbreviations I use without explanation
+- Words or phrases I clearly avoid
+- How I soften or sharpen a message (hedging language vs. direct statements)
+
+**Tone calibration by audience**
+- How does my tone shift between different audiences (clients, internal team, vendors, advisors)?
+- Where am I warm vs. blunt?
+- Where am I formal vs. casual?
+- Do I show vulnerability, frustration, humor, or self-deprecation? With whom?
+
+**Structural patterns by email type**
+- What does a check-in email look like? (opening, body, close)
+- What does an internal FYI forward look like?
+- What does a delegation/action request look like?
+- What does an advisory email look like?
+- What does a quick reply look like?
+- What does a multi-question email look like?
+- What does a relationship management recap look like?
+- Any other recurring structural templates you find
+
+**What I don't do**
+- Formatting I avoid (bold, italic, bullet points, numbered lists, emojis)
+- Phrases or patterns I never use despite them being common in professional email
+- Sign-offs, openings, or hedges that are absent from the entire sample
+
+### Phase 3: Write the voice profile
+
+Using the analysis from Phase 2, produce a complete SKILL.md file with this frontmatter:
+
+\`\`\`yaml
+---
+name: my-voice
+description: "Write content in [YOUR NAME]'s authentic voice and communication style. Use this skill whenever drafting emails, messages, Slack posts, client communications, internal notes, or any written content on [YOUR NAME]'s behalf. Also use when the user says 'write like me', 'draft in my voice', 'sound like me', 'write this for me', or asks to compose any professional communication. This skill captures [YOUR NAME]'s specific vocabulary, sentence patterns, tone, and structural habits drawn from real email samples."
+---
+\`\`\`
+
+Replace \`[YOUR NAME]\` with my actual name (you'll know it from the emails). Replace \`my-voice\` with \`[firstname]-voice\` in lowercase.
+
+The body of the skill should contain these sections:
+
+1. **Core voice identity** — 2-3 paragraphs describing the overall feel of my writing. Not abstract — grounded in what the emails actually show.
+
+2. **Greetings and sign-offs** — Every pattern, with notes on when each is used. Include a "never use" list.
+
+3. **Sentence structure and rhythm** — Concrete patterns with real examples quoted from the emails. Show the rhythm, don't just describe it.
+
+4. **Vocabulary and phrases** — Two subsections:
+   - Signature expressions (15+ entries, each with a brief definition and example context)
+   - Abbreviations and shorthand I use
+
+5. **Tone calibration by audience** — Separate sections for each audience type I communicate with. Each section should include an example email excerpt that captures the tone.
+
+6. **Structural patterns by email type** — Numbered step templates for each recurring email format. These should be specific enough that Claude can follow them to produce a structurally accurate email.
+
+7. **Things I don't do** — A concrete list of anti-patterns.
+
+8. **Applying this skill** — A short checklist for Claude to follow when using this profile.
+
+### Phase 4: Present and review
+
+Save the SKILL.md file and present it. Then ask me to review each section and tell you what's wrong, missing, or over-fitted to a single email rather than a real pattern.
+
+## Rules for this task
+
+- Do not invent patterns. Every claim in the profile must be supported by at least 2-3 emails showing the same behavior. If something appears in only one email, flag it as a one-off, not a pattern.
+- Quote my actual words as evidence. The profile should contain real excerpts, not paraphrased summaries of what I "tend to" do.
+- Do not describe my voice in vague terms like "professional yet approachable." Be specific. What words do I actually use? What structures do I actually follow?
+- If two patterns contradict each other (e.g., I'm formal with one client and casual with another), capture both and explain the conditions.
+- Do not pad the profile. If a section has only 3 real patterns, list 3. Do not inflate to 10 with invented ones.
+- Treat this like forensic linguistics, not a personality quiz.
+- Never attribute someone else's words to me. If a phrase appears only in a quoted reply chain or forwarded message — not in my original text above the quote — it is not my writing. Double-check every quote you pull by confirming it sits above the reply separator, not below it.`;
+
+function copyPrompt() {
+  const btn = document.querySelector('.copy-btn');
+  navigator.clipboard.writeText(rawPrompt).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy to clipboard';
+      btn.classList.remove('copied');
+    }, 2500);
+  }).catch(() => {
+    // Fallback for environments where clipboard API fails
+    const ta = document.createElement('textarea');
+    ta.value = rawPrompt;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy to clipboard';
+      btn.classList.remove('copied');
+    }, 2500);
+  });
+}
+</script>
+
+</body>
+</html>
